@@ -35,24 +35,20 @@ public class Main {
             }
 
 
-            if (waterMenu < 10 && waterMenu >= 0) {
+            if (waterMenu < 10 && waterMenu >= 1) {
 
-                if (waterMenu == sentinel) {
-                    System.out.print("If you want to get to the main menu \n   Press 0.");
-                    done = true;
-
-                } else if (waterMenu == 1) {
+                if (waterMenu == 1) {
                     handlingReadingCardsSubMenu();
                 } else if (waterMenu == 2) {
-                    done = true;
+                    System.out.println("This part is still under development");
                 } else if (waterMenu == 3) {
-                    done = true;
+                    System.out.println("This part is still under development");
                 } else if (waterMenu == 4) {
-                    done = true;
+                    System.out.println("This part is still under development");
                 } else if (waterMenu == 5) {
                     customerModification();
                 } else if (waterMenu == 6) {
-                    done = true;
+                    System.out.println("This part is still under development");
                 }
 
 
@@ -144,11 +140,12 @@ public class Main {
 
                     DB.insertSQL("Insert into tblReading (fldSerialNO, fldDrainage, fldWaterUsed, fldIsRecieved) values('" + serialNo + "',NULL,NULL,0)");
 
-
-                    System.out.println("The reading card was sent to the customer successfully");
-
-                    System.out.println("If you want to send out more press 1.");
-                    System.out.println("If you want to go the menu press 0.");
+                    System.out.println("*------------------------------------------------------*");
+                    System.out.println("|The reading card was sent to the customer successfully|");
+                    System.out.println("*------------------------------------------------------*");
+                    System.out.println("|Press 1. if you want to send out more                 |");
+                    System.out.println("|Press 2. if you want to go to the menu                |");
+                    System.out.println("*------------------------------------------------------*");
                     menuOption = in.next();
                 }
 
@@ -173,21 +170,6 @@ public class Main {
                 }
             }
         }
-
-            /*Scanner in = new Scanner(System.in);
-            System.out.println("Send out reading card press 1");
-            String send = in.next();
-            int test = 0;
-
-            if (send.equals("1")){
-                for (int i = 0; i < globalCount; i++) {
-                    test++;
-                }
-                System.out.println("Succefully sent to " + test + " people"); //Each card to unique user from database
-            }
-        }
-
-             */
 
     }
 
@@ -227,18 +209,20 @@ public class Main {
         Scanner in = new Scanner(System.in);
         boolean customerDone = false;
 
-        System.out.println("*-----------------------------------------------------*");
-        System.out.println("|            WaterWork customer administration        |");
-        System.out.println("*-----------------------------------------------------*");
-        System.out.println("|Press 1. to create a new customer                    |");
-        System.out.println("|Press 2. to open update a customers information      |");
-        System.out.println("|Press 3. to open delete a customer                   |");
-        System.out.println("|Press 4. to see the list of all customers            |");
-        System.out.println("|                                                     |");
-        System.out.println("|       If you want to go the main menu press 0       |");
-        System.out.println("*-----------------------------------------------------*");
+
 
         while (!customerDone) {
+
+            System.out.println("*-----------------------------------------------------*");
+            System.out.println("|            WaterWork customer administration        |");
+            System.out.println("*-----------------------------------------------------*");
+            System.out.println("|Press 1. to create a new customer                    |");
+            System.out.println("|Press 2. to open update a customers information      |");
+            System.out.println("|Press 3. to open delete a customer                   |");
+            System.out.println("|Press 4. to see the list of all customers            |");
+            System.out.println("|                                                     |");
+            System.out.println("|       If you want to go the main menu press 0       |");
+            System.out.println("*-----------------------------------------------------*");
 
             if (in.hasNextInt()) {
                 customerMenu = in.nextInt();
@@ -250,7 +234,7 @@ public class Main {
             }
 
             if (customerMenu == 1) {
-                String StopIt = in.nextLine(); //This make that CprOrCvrNo is not 1 and your asked.
+                String StopIt = in.nextLine(); //This make that CprOrCvrNo is not 1 and instead what your asked.
 
 
                 System.out.println("Please enter the CPR/CVR-number of the person/company you want to add");
@@ -270,9 +254,12 @@ public class Main {
 
                 DB.insertSQL("Insert into tblCustomers values('" + cprOrCvrNo + "','" + name + "','" + address + "','" + zipCode + "','" + email + "','" + phoneNo + "'," + segmentID + ")");
 
-                System.out.println("The information has been added to the database");
-                System.out.println("Press 1. too add more customers");
-                System.out.println("Press 0. too go the main menu");
+                System.out.println("*----------------------------------------------*");
+                System.out.println("|The information has been added to the database|");
+                System.out.println("*----------------------------------------------*");
+                System.out.println("|Press 1. too add more customers               |");
+                System.out.println("|Press 0. too go the main menu                 |");
+                System.out.println("*----------------------------------------------*");
 
 
             } else if (customerMenu == 2) {
@@ -308,6 +295,24 @@ public class Main {
 
                 }
             } else if (customerMenu == 3) {
+                System.out.println("Please input the CPR/CVR-number of the customer you want to delete");
+                String cprOrCvrNo = in.next();
+
+                System.out.println("Are you sure that you want to delete the customer with CPR/CVR-number: " + cprOrCvrNo);
+                System.out.println("Press 1. for yes");
+                System.out.println("Press 2. for no");
+                String sureOrNot = in.next();
+
+                if(sureOrNot.equals("1")){
+                    DB.deleteSQL("Delete from tblCustomers where fldCprOrCvrNo = '"+cprOrCvrNo+"';");
+                    System.out.println("The customer with: " + cprOrCvrNo + " was deleted.");
+                    System.out.println("You've been redirected to the menu.");
+                }
+
+                else if(!sureOrNot.equals("1")){
+                    System.out.println("The customer wasn't deleted, you've been redirected to the menu");
+
+                }
 
             } else if (customerMenu == 4) {
                 System.out.println("*-------------**-------------------------------**-------------------------------**-----------**-------------------------------**----------------**-----**");
